@@ -1,0 +1,62 @@
+# version: '3.1'
+# services:
+#   mongodb:
+#     container_name: mongoDB
+#     image: mongo
+#     restart: always
+#     ports:
+#       - 27017:27017
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: RgRI4ggb89gf28ALoz4MZdD1le9dnxjruYYl7YCU
+#     volumes:
+#       - ./volume/mongodb:/data/lib
+#   mysql:
+#     container_name: MySQL
+#     image: mysql
+#     restart: always
+#     ports:
+#       - 3306:3306
+#     environment:
+#       MYSQL_ROOT_PASSWORD: Me0T9ZPGtgwSyu88xdgplH2IO3CJqKObUzm6T7qU
+#     volumes:
+#       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+#       - ./volume/mysql:/var/lib/mysql
+
+version: '3.8'
+
+services:
+  yugabytedb:
+    image: yugabytedb/yugabyte:latest
+    container_name: yugabytedb
+    command: ["/bin/bash", "-c", "bin/yugabyted start --daemon=false && sleep 10 && ysqlsh -h localhost -p 5433 -U yugabyte -f /docker-entrypoint-initdb.d/yugabytedb-init.sql"]
+    ports:
+      - "7000:7000"    # Admin UI
+      - "5433:5433"    # YSQL
+      - "9042:9042"    # YCQL
+    environment:
+      YSQL_USER: yugabyte
+      YSQL_PASSWORD: yugabyte
+    volumes:
+      - ./yugabytedb-init.sql:/docker-entrypoint-initdb.d/yugabytedb-init.sql
+
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - yugabytedb
+
+
+volumes:
+  mongo-data:

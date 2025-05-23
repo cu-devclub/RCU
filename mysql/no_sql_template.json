@@ -1,0 +1,87 @@
+{
+    "lifestyle": "",
+    "highschool_name": "",
+    "highschool_province": "",
+    "highschool_year": "",
+    "highschool_gpax": "",
+    "highschool_advisor": "",
+    "address": {  
+        "number": "",
+        "road": "",
+        "village_number": "",
+        "": "",
+        "subdistrict": "",
+        "district": "",
+        "province": "",
+        "postcode": ""
+    },
+    "alternative_address": {  
+        "number": "",
+        "road": "",
+        "village_number": "",
+        "": "",
+        "subdistrict": "",
+        "district": "",
+        "province": "",
+        "postcode": ""
+    },
+    "father": {
+        "fullname": "",
+        "age": "",
+        "phone": "",
+        "job": "",
+        "address": {  
+            "number": "",
+            "road": "",
+            "village_number": "",
+            "": "",
+            "subdistrict": "",
+            "district": "",
+            "province": "",
+            "postcode": ""
+        }
+    },
+    "mother": {
+        "fullname": "",
+        "age": "",
+        "phone": "",
+        "job": "",
+        "address": {  
+            "number": "",
+            "road": "",
+            "village_number": "",
+            "": "",
+            "subdistrict": "",
+            "district": "",
+            "province": "",
+            "postcode": ""
+        }
+    },
+    "income": "",
+    "marriage_status": "",
+    "children_number": "",
+    "child_order": "",
+    "additional_children_number": "",
+    "adopter": {
+        "fullname": "",
+        "age": "",
+        "phone": "",
+        "job": "",
+        "income": "",
+        "relation": "",
+        "address": {  
+            "number": "",
+            "road": "",
+            "village_number": "",
+            "": "",
+            "subdistrict": "",
+            "district": "",
+            "province": "",
+            "postcode": ""
+        }
+    },
+    "scholarship": {
+        "name": "",
+        "amount": ""
+    }
+}
