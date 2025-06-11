@@ -10,6 +10,10 @@ import (
 	userModel "rcu/versions/v1/models/user"
 	userService "rcu/versions/v1/services/user"
 
+	parcelController "rcu/versions/v1/controllers/parcel"
+	parcelModel "rcu/versions/v1/models/parcel"
+	parcelService "rcu/versions/v1/services/parcel"
+
 	_ "github.com/lib/pq"
 
 	"github.com/gin-gonic/gin"
@@ -48,9 +52,16 @@ func RegisterRoutes(r *gin.RouterGroup) {
 	userService := &userService.UserService{Model: userModel, MailModel: MailModel}
 	userController := &userController.UserController{Service: userService}
 
-	r.GET("/hello", userController.Hello)
+	parcelModel := &parcelModel.ParcelModel{DB: db}
+	parcelService := &parcelService.ParcelService{Model: parcelModel}
+	parcelController := &parcelController.ParcelController{Service: parcelService}
+
 	r.POST("/login", userController.Login)
 	r.POST("/forgot-password", userController.ForgotPassword)
 	r.POST("/checkpin", userController.CheckPin)
 	r.POST("/reset-password", userController.ResetPassword)
+
+	r.GET("/card", userController.Card)
+
+	r.GET("/parcel", parcelController.Get)
 }

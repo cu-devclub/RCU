@@ -24,6 +24,10 @@ export default function IndexPage() {
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
           <Button onPress={logout} color="danger">Logout</Button>
+          <br/><br/><br/>
+          <center>
+            <img src="/api/card" className="border-5"/>
+          </center>
       </div>
   //   <DefaultLayout>
   //     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">

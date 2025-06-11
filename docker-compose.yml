@@ -27,6 +27,22 @@ version: '3.8'
 
 services:
   yugabytedb:
+    # image: yugabytedb/yugabyte
+    # container_name: yugabyte
+    # ports:
+    #   - "7000:7000"     # Admin UI
+    #   - "9000:9000"     # Master Admin UI
+    #   - "15433:15433"   # YSQL Web UI
+    #   - "5433:5433"     # YSQL
+    # environment:
+    #     YSQL_USER: yugabyte
+    #     YSQL_PASSWORD: yugabyte
+    # volumes:
+    #     - yugabyte_data:/home/yugabyte/yb_data    
+    # command: >
+    #     bin/yugabyted start
+    #     --base_dir=/home/yugabyte/yb_data
+    #     --background=false
     image: yugabytedb/yugabyte:latest
     container_name: yugabytedb
     command: ["/bin/bash", "-c", "bin/yugabyted start --daemon=false && sleep 10 && ysqlsh -h localhost -p 5433 -U yugabyte -f /docker-entrypoint-initdb.d/yugabytedb-init.sql"]
@@ -34,6 +50,7 @@ services:
       - "7000:7000"    # Admin UI
       - "5433:5433"    # YSQL
       - "9042:9042"    # YCQL
+      - "15433:15433"  # YSQL Web UI
     environment:
       YSQL_USER: yugabyte
       YSQL_PASSWORD: yugabyte
