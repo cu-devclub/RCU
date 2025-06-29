@@ -1,75 +1,72 @@
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
-  NavbarMenu,
-  NavbarMenuToggle,
   NavbarBrand,
   NavbarItem,
-  NavbarMenuItem,
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
-import { Kbd } from "@heroui/kbd";
-import { Link } from "@heroui/link";
-import { Input } from "@heroui/input";
+import { useRouter } from 'next/router';
+import { useEffect } from "react";
 import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-  Logo,
-} from "@/components/icons";
+
+import { BoxArrowRight } from "react-bootstrap-icons";
 
 export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
+  const router = useRouter();
+
+  const currentPath = router.asPath;
+  
+  useEffect(() => {
+      const basePath = currentPath.split('/')[1] ? `/${currentPath.split('/')[1]}` : '/';
+      const navItem = document.getElementById(`navitem-${basePath}`);
+      if (navItem) {
+          navItem.setAttribute('data-active', 'true');
       }
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
+  })
+
+  const logout = async () => {
+    await fetch('/api/logout', {
+      method: 'POST',
+    });
+    router.push('/login');
+  };
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
+    <HeroUINavbar maxWidth="full" position="sticky" className="border-b border-gray-400">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">ACME</p>
-          </NextLink>
+            <NextLink className="flex justify-start items-center gap-1" href="/">
+            <img
+              src="/images/chula_logo.png"
+              className="h-[2.5rem] w-auto"
+              style={{ objectFit: "contain" }}
+              alt="Chula Logo"
+            />
+            <div className="leading-none">
+              <p className="font-bold" style={{ color: "#DB5F8E" }}>สำนักงานหอพักนิสิต</p>
+              <p style={{ color: "#898989" }}>จุฬาลงกรณ์มหาวิทยาลัย</p>
+            </div>
+            </NextLink>
         </NavbarBrand>
         <div className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
+          {siteConfig.HorizonNavItems.map((item) => (
             <NavbarItem key={item.href}>
-              <NextLink
-                className={clsx(
+                <NextLink
+                  className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
+                  "py-3",
+                  "data-[active=true]:text-black data-[active=true]:font-medium data-[active=true]:border-b-2 data-[active=true]:border-[#DB5F8E]"
+                  )}
+                  color="foreground"
+                  href={item.href}
+                  id={`navitem-${item.href}`}
+                >
+                  {item.label}
+                </NextLink>
             </NavbarItem>
           ))}
         </div>
@@ -79,63 +76,17 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.twitter} title="Twitter">
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord} title="Discord">
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.github} title="GitHub">
-            <GithubIcon className="text-default-500" />
-          </Link>
-          <ThemeSwitch />
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        <NavbarItem className="hidden md:flex">
+        <NavbarItem>
           <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
+            variant="light"
+            className="flex items-center gap-2 font-medium"
+            endContent={<BoxArrowRight className="text-lg" />}
+            onPress={logout}
           >
-            Sponsor
+            ออกจากระบบ
           </Button>
         </NavbarItem>
       </NavbarContent>
-
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
-        <ThemeSwitch />
-        <NavbarMenuToggle />
-      </NavbarContent>
-
-      <NavbarMenu>
-        {searchInput}
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
-              >
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-        </div>
-      </NavbarMenu>
     </HeroUINavbar>
   );
 };

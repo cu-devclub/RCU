@@ -1,109 +1,62 @@
 export type SiteConfig = typeof siteConfig;
 
+import { House, Person, Receipt, Building, Hammer } from "react-bootstrap-icons";
+import { LuBed } from "react-icons/lu";
+
 export const siteConfig = {
   name: "หอพักนิสิตจุฬาฯ",
   description: "หอพักนิสิตจุฬาลงกรณ์มหาวิทยาลัย (Chulalongkorn University Dormitory)",
   HorizonNavItems: [
     {
-      label: "หน้าแรก",
-      href: "/",
-    },
-    {
-      label: "ชำระค่าหอพัก",
-      href: "/payment",
-    },
-    {
-      label: "สถานะการอยู่หอ",
-      href: "/Dormstatus",
-    },
-    {
-      label: "สถานะเตียง",
-      href: "/roomstatus",
-    },
-    {
-      label: "แจ้งซ่อม",
-      href: "/repair",
-    },
-  ],
-  VerticalNavItems: [
-    {
       label: "ข้อมูลนิสิตหอพัก",
-      href: "/",
+      href: "/home",
     },
     {
       label: "กิจกรรมหอพัก",
-      href: "/",
+      href: "/activity",
     },
     {
       label: "บุคลากรหอพัก",
-      href: "/",
+      href: "/staff",
     },
     {
       label: "แบบฟอร์มต่างๆ",
-      href: "/",
-    },
+      href: "/forms",
+    }
   ],
-  navItems: [
+  "/home": [
     {
-      label: "Home",
-      href: "/",
+      label: "หน้าหลัก",
+      href: "/home",
+      icon: House
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "ข้อมูลนิสิต",
+      href: "/home/profile",
+      icon: Person
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "ชำระค่าหอพัก",
+      href: "/home/payment",
+      icon: Receipt
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "สถานะการอยู่หอ",
+      href: "/home/dorm_status",
+      icon: Building
     },
     {
-      label: "About",
-      href: "/about",
+      label: "สถานะเตียง",
+      href: "/home/bed_status",
+      icon: LuBed
     },
+    {
+      label: "แจ้งซ่อม",
+      href: "/home/repair",
+      icon: Hammer
+    }
   ],
-  navMenuItems: [
-    {
-      label: "Profile",
-      href: "/profile",
-    },
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      label: "Projects",
-      href: "/projects",
-    },
-    {
-      label: "Team",
-      href: "/team",
-    },
-    {
-      label: "Calendar",
-      href: "/calendar",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
-    },
-  ],
-  links: {
-    github: "https://github.com/heroui-inc/heroui",
-    twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
+  ActivityVerticalNavItems: [],
+  StaffVerticalNavItems: [],
+  FormsVerticalNavItems: []
 };
